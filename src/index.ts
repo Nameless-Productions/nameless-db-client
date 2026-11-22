@@ -20,12 +20,15 @@ export class Client {
         this.socket = socket;
 
         // Replies arrive in order, one line per command (except DELETE).
-        readline.createInterface({ input: socket }).on("line", (line) => {
+        const rl = readline.createInterface({ input: socket });
+        rl.on("line", (line) => {
             const p = this.pending.shift();
             if (!p) return;
             if (line.startsWith("ERROR")) p.reject(new Error(line.slice(6)));
             else p.resolve(line);
         });
+        // readline re-emits socket errors; unhandled it would crash the process (socket handler below deals with them).
+        rl.on("error", () => {});
         socket.on("error", (err) => this.fail(err));
         socket.on("close", () => this.fail(new Error("Connection closed")));
 
