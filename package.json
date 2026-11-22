@@ -1,0 +1,14 @@
+{
+  "name": "nameless-db-client",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "typescript": "^5.9.0"
+  }
+}
