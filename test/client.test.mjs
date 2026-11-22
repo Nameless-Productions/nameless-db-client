@@ -9,6 +9,7 @@ const store = new Map();
 const sockets = new Set();
 const server = net.createServer((socket) => {
     sockets.add(socket);
+    socket.on("error", () => {}); // resets are expected when the test drops connections
     let authed = false;
     readline.createInterface({ input: socket }).on("line", (line) => {
         const [cmd, key, ...rest] = line.split(" ");
